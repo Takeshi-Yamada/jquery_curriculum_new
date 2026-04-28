@@ -18,9 +18,9 @@
     // 回答はここに書いてね
     function encountHtml(res) {
       return  `
-                <p class="name"></p>
+                <p class="name">${res.name}</p>
                 <div>
-                  <img class="img" src="` + res.sprites.front_default + `" alt="見つけたポケモンの画像">
+                  <img class="img" src="${res.sprites.front_default}" alt="見つけたポケモンの画像">
                 </div>
                 <div>
                   <button class="btn" id="catch">捕まえる</button>
@@ -33,7 +33,7 @@
       return  `
                 <p class="name">ゲットしました</p>
                 <div>
-                  <img class="img" src="`+ res.sprites.default +`" alt="モンスターボール">
+                  <img class="img" src="${res.sprites.default}" alt="モンスターボール">
                 </div>
                 <button class="btn" data-js="reset">戻る</button>
               `
@@ -62,7 +62,7 @@
     $(document).on('click', '#pokemon_search', function(){
       const pokeId = Math.floor(Math.random() * 151) + 1;
       $.ajax({
-        url: 'https://pokeapi.co/api/v2/pokemon/' + pokeId + '/',
+        url: `https://pokeapi.co/api/v2/pokemon/${pokeId}/`,
         method: 'GET'
       }).done(function(res) {
         $('#wrapper').children().replaceWith(encountHtml(res));
