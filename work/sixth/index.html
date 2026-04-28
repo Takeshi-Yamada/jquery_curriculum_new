@@ -16,82 +16,85 @@
   <script src="../../common/js/jquery.js"></script>
   <script>
     // 回答はここに書いてね
-    encountHtml =`
-                <p class="name"></p>
-                <div>
-                  <img class="img" src="" alt="見つけたポケモンの画像">
-                </div>
-                <div>
-                  <button class="btn" id="catch">捕まえる</button>
-                  <button class="btn" data-js="reset">逃げる</button>
-                </div>
-              `;
+    $(function() {
 
-    doneHtml = `
-                <p class="name">ゲットしました</p>
-                <div>
-                  <img class="img" src="" alt="モンスターボール">
-                </div>
-                <button class="btn" data-js="reset">戻る</button>
-              `;
+      encountHtml =`
+                  <p class="name"></p>
+                  <div>
+                    <img class="img" src="" alt="見つけたポケモンの画像">
+                  </div>
+                  <div>
+                    <button class="btn" id="catch">捕まえる</button>
+                    <button class="btn" data-js="reset">逃げる</button>
+                  </div>
+                `;
 
-    failHtml = `
-                <p class="text">逃げられてしまった...</p>
-                <button class="btn mt" data-js="reset">戻る</button>
-              `;
+      doneHtml = `
+                  <p class="name">ゲットしました</p>
+                  <div>
+                    <img class="img" src="" alt="モンスターボール">
+                  </div>
+                  <button class="btn" data-js="reset">戻る</button>
+                `;
 
-    searchHtml = `
-                <button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>
-              `;
+      failHtml = `
+                  <p class="text">逃げられてしまった...</p>
+                  <button class="btn mt" data-js="reset">戻る</button>
+                `;
 
-    errHtml = `
-                <p class="name">エラーが発生しました</p>
-              `
+      searchHtml = `
+                  <button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>
+                `;
 
-    //見つける処理
-    $(document).on('click', '#pokemon_search', function(){
-      const pokeId = Math.floor(Math.random() * 151) + 1;
-      $.ajax({
-        url: `https://pokeapi.co/api/v2/pokemon/${pokeId}/`,
-        method: 'GET',
-        dataType: 'json'
-      }).done(function(res) {
-        $('#wrapper').children().replaceWith(encountHtml);
-        $('img').attr('src', res.sprites.front_default);
+      errHtml = `
+                  <p class="name">エラーが発生しました</p>
+                `
+
+      //見つける処理
+      $(document).on('click', '#pokemon_search', function(){
+        const pokeId = Math.floor(Math.random() * 151) + 1;
         $.ajax({
-                url:res.species.url,
-                dataType: 'json',
-                success: function(nameData){
-                    console.log(nameData);
-                    const pokemonName = nameData.names.find(name => name.language.name === 'ja').name
-                    $('.name').text(pokemonName);
-                }
-            })
-      }).fail(function(err) {
-        $('#wrapper').children().replaceWith(failHtml);
-      })
-    });
-
-    //捕まえるor逃げる処理
-    $(document).on('click','#catch', function(){
-      $.ajax({
-        url: 'https://pokeapi.co/api/v2/item/4',
-        method: 'GET'
-      }).done(function(res) {
-        if (Math.random() < 0.5) {
-          $('#wrapper').html(doneHtml);
-          $('img').attr('src', res['sprites']['default']);
-        } else {
-          $('#wrapper').html(failHtml);
-        }
-      }).fail(function(err) {
-        $('#wrapper').html(errHtml);
+          url: `https://pokeapi.co/api/v2/pokemon/${pokeId}/`,
+          method: 'GET',
+          dataType: 'json'
+        }).done(function(res) {
+          $('#wrapper').children().replaceWith(encountHtml);
+          $('img').attr('src', res.sprites.front_default);
+          $.ajax({
+                  url:res.species.url,
+                  dataType: 'json',
+                  success: function(nameData){
+                      console.log(nameData);
+                      const pokemonName = nameData.names.find(name => name.language.name === 'ja').name
+                      $('.name').text(pokemonName);
+                  }
+              })
+        }).fail(function(err) {
+          $('#wrapper').children().replaceWith(failHtml);
+        })
       });
-    });
 
-    //リセット処理
-    $(document).on('click', '[data-js="reset"]', function(){
-      $('#wrapper').html(searchHtml);
+      //捕まえるor逃げる処理
+      $(document).on('click','#catch', function(){
+        $.ajax({
+          url: 'https://pokeapi.co/api/v2/item/4',
+          method: 'GET'
+        }).done(function(res) {
+          if (Math.random() < 0.5) {
+            $('#wrapper').html(doneHtml);
+            $('img').attr('src', res['sprites']['default']);
+          } else {
+            $('#wrapper').html(failHtml);
+          }
+        }).fail(function(err) {
+          $('#wrapper').html(errHtml);
+        });
+      });
+
+      //リセット処理
+      $(document).on('click', '[data-js="reset"]', function(){
+        $('#wrapper').html(searchHtml);
+      });
     });
   </script>
 </body>
