@@ -53,10 +53,20 @@
       const pokeId = Math.floor(Math.random() * 151) + 1;
       $.ajax({
         url: `https://pokeapi.co/api/v2/pokemon/${pokeId}/`,
-        method: 'GET'
+        method: 'GET',
+        dataType: 'json'
       }).done(function(res) {
         $('#wrapper').children().replaceWith(encountHtml);
-        $('img').attr('src', res['sprites']['front_default']);
+        $('img').attr('src', res.sprites.front_default);
+        $.ajax({
+                url:res.species.url,
+                dataType: 'json',
+                success: function(nameData){
+                    console.log(nameData);
+                    const pokemonName = nameData.names.find(name => name.language.name === 'ja').name
+                    $('.name').text(pokemonName);
+                }
+            })
       }).fail(function(err) {
         $('#wrapper').children().replaceWith(failHtml);
       })
