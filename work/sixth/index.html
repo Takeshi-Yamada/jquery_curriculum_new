@@ -56,7 +56,7 @@
         `;
 
       function encount(data) {
-        $('#wrapper').children().replaceWith(encounterHtml);
+        $('#wrapper').html(encounterHtml);
         $('img').attr('src', data.sprites.front_default);
       }
 
@@ -94,7 +94,7 @@
           encount(res);
           japanese(res);
         }).fail(function(err) {
-          $('#wrapper').children().replaceWith(failHtml);
+          $('#wrapper').html(failHtml);
         });
       });
 
