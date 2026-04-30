@@ -67,7 +67,7 @@
       }
 
       //見つける処理
-      $(document).on('click', '#pokemon_search', function(){
+      $('#pokemon_search').on('click', function(){
         const pokeId = Math.floor(Math.random() * 151) + 1;
         $.ajax({
           url: `https://pokeapi.co/api/v2/pokemon/${pokeId}/`,
@@ -83,7 +83,7 @@
       });
 
       //捕まえるor逃げる処理
-      $(document).on('click','#catch', function(){
+      $('#catch').on('click', function(){
         $.ajax({
           url: 'https://pokeapi.co/api/v2/item/4',
           method: 'GET'
@@ -101,7 +101,7 @@
       });
 
       //リセット処理
-      $(document).on('click', '[data-js="reset"]', function(){
+      $('[data-js="reset"]').on('click', function(){
         $('#wrapper').html(searchHtml);
       });
     });
