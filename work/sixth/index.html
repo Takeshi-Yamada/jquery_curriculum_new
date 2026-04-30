@@ -65,8 +65,8 @@
           url:data.species.url,
           method: 'GET',
           dataType: 'json',
-        }).done(function(nameData) {
-          const pokemonName = nameData.names.find(name => name.language.name === 'ja').name
+        }).done(function(res) {
+          const pokemonName = res.names.find(name => name.language.name === 'ja').name
           $('.name').text(pokemonName);
         }).fail(function(err) {
           $('#wrapper').html(errHtml);
