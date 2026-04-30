@@ -18,7 +18,7 @@
     // 回答はここに書いてね
     $(function() {
 
-      let encounterHtml =
+      const encounterHtml =
         `
           <p class="name"></p>
           <div>
@@ -30,7 +30,7 @@
           </div>
         `;
 
-      let doneHtml =
+      const doneHtml =
         `
           <p class="name">ゲットしました</p>
           <div>
@@ -39,18 +39,18 @@
           <button class="btn" data-js="reset">戻る</button>
         `;
 
-      let failHtml =
+      const failHtml =
         `
           <p class="text">逃げられてしまった...</p>
           <button class="btn mt" data-js="reset">戻る</button>
         `;
 
-      let searchHtml =
+      const searchHtml =
         `
           <button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>
         `;
 
-      let errHtml =
+      const errHtml =
         `
           <p class="name">エラーが発生しました</p>
         `;
@@ -74,7 +74,7 @@
       }
 
       function getResult(data) {
-        let isGet = Math.random() < 0.5;
+        const isGet = Math.random() < 0.5;
         if (isGet) {
           $('#wrapper').html(doneHtml);
           $('img').attr('src', data['sprites']['default']);
